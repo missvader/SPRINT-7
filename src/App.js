@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import WebServices from './components/WebServices';
 import './App.css';
 
 
@@ -47,6 +48,9 @@ function App() {
           Una página web (500 €)
         </label>
       </div>
+      {//Renderizado condicional de WebServices component
+        datos.web && <WebServices/>
+      }
       <div className="form-check mt-2">
         <input 
           className="form-check-input" 
