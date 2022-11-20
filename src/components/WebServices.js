@@ -10,7 +10,6 @@ function WebServices(){
         <input type="number"
               name="pages"
               min={1} 
-              
           />
       </div>
       <div className="m-2">
@@ -18,9 +17,8 @@ function WebServices(){
           Número de idiomas
         </label>
         <input type="number" 
-              name="languages"
+              name="numLanguages"
               min={1}
-              
           />
       </div>
     </div>
