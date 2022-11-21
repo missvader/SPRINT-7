@@ -2,6 +2,8 @@ import React from 'react';
 import { useState, useEffect} from 'react';
 import WebServices from './components/WebServices';
 import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import Welcome from './components/Welcome';
 
 
 function App() {
@@ -58,7 +60,10 @@ function App() {
  
   return (
     <div className="App">
-     <form className='form container border mt-3 p-3'>
+      <Routes>
+        <Route path='/' element={<Welcome/>}/>
+        <Route path='budget' element ={
+          <form className='form container border mt-3 p-3'>
       <h5>¿ Qué quieres hacer ?</h5>
       <div className='form-check mt-3'>
         <input 
@@ -112,6 +117,9 @@ function App() {
       </div>
       <p className='mt-3'>Preu: {budget} €</p>
      </form>
+        }/>
+      </Routes>
+     
     </div>
   );
 }
