@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState} from 'react';
+import { useState, useEffect} from 'react';
 import WebServices from './components/WebServices';
 import './App.css';
 
@@ -15,6 +15,31 @@ function App() {
   /*Estado para guardar los datos de pages y languages*/
   const [pages, setPages] = useState(1);
   const [languages, setLanguages] = useState(1);
+//USE EFFECT para mostrar el local storage al renderizar
+  useEffect(()=>{
+    let data1 = localStorage.getItem("datos");
+    if(data1){
+      setDatos(JSON.parse(data1))
+    }
+  },[])
+  useEffect(()=>{
+    let data2 = localStorage.getItem("pages");
+    if(data2){
+      setPages(JSON.parse(data2))
+    }
+  },[])
+  useEffect(()=>{
+    let data3 = localStorage.getItem("languages");
+    if(data3){
+      setLanguages(JSON.parse(data3))
+    }
+  },[])
+  //USE EFFECT para guardar los datos en localStorage
+  useEffect(()=>{
+    localStorage.setItem("datos", JSON.stringify(datos));
+    localStorage.setItem("pages",JSON.stringify(pages));
+    localStorage.setItem("languages",JSON.stringify(languages))
+  }, [datos,pages,languages])
   //LOGIC
   /*esta es la funcion que maneja el evento onChange de los checkbox:
   simplemente maneja el estado ejecutanto el setDatos, que conserva los datos ya existentes con el spread operator y agrega los nuevos datos en funcion de si se selecciona o deseleciona el checkbox */
