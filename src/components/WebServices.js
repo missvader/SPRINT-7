@@ -21,14 +21,14 @@ function WebServices({label, quantity, setQuantity}){
         <label htmlFor="Webservices" className="p-2">
           {label}
         </label>
-        <button onClick={sumar}>+</button>
-        <input
+        <button className="btn btn-danger" onClick={sumar}>+</button>
+        <input className="number border-0"
               type="number" 
               value={quantity}
               min={1} 
               onChange={handleChange}
           />
-        <button onClick={restar}>-</button>
+        <button className="btn btn-danger" onClick={restar}>-</button>
       </div>
   );
 }
