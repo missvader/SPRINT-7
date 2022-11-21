@@ -47,13 +47,19 @@ function App() {
           Una página web (500 €)
         </label>
       </div>
-      {/*Renderizado condicional de WebServices component(de momento componente dentro de app), simplemente al ejecutar funcion que maneja evento, se recoge value y se actualiza estado de pages y languages*/
-        datos.web && <WebServices
-              pages={pages}
-              languages={languages}
-              setPages={setPages}
-              setLanguages ={setLanguages}
-              />
+      {/*Renderizado condicional de WebServices component*/
+        datos.web && 
+              
+            <div className="d-inline-flex p-3 flex-column border border-3 rounded-3 border-dark">
+                <WebServices
+              label ={"Número de páginas:"}
+              quantity={pages}
+              setQuantity={setPages}/>
+                <WebServices
+              label ={"Número de idiomas:"}
+              quantity={languages}
+              setQuantity={setLanguages}/>
+            </div>
       }
       <div className="form-check mt-2">
         <input 

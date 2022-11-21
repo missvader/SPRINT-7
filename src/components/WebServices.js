@@ -1,62 +1,35 @@
 import React from "react";
-// PENDIENTE: Refactorizar codigo
-/*al componente le pasamos por parametros languages, pages y los set de cada uno para modificar estado. necesitamos que el componente hijo se comunique con el padre y lo hacemos mediante props */
+// PENDIENTE: maquetacion componente 
+/*Refactorización del componente webservices. Lo he hecho más pequeño, pasando nuevas props que en cada llamada al componente se definen como pages o languages. De esta manera solo tenemos 3 funciones */
 //LOGICA
-/*Estas son las funciones que manejan los eventos, tanto input como button (está pendiente refactorizar código) */
-function WebServices({pages, languages, setPages, setLanguages}){
-  const handleChangePages =(event)=>{
-    event.prentDefault();
-    setPages(parseInt(event.target.value));
-  }
-  const handleChangeLanguages=(event)=> {
+/*Estas son las funciones que manejan los eventos, tanto input como button */
+function WebServices({label, quantity, setQuantity}){
+  const handleChange =(event)=>{
     event.preventDefault();
-    setLanguages(parseInt(event.target.value));
+    setQuantity(parseInt(event.target.value));
   }
-  const sumarPages = (event)=> {
+  const sumar = (event)=> {
     event.preventDefault();
-    setPages(pages => pages + 1)
+    setQuantity(quantity => quantity + 1)
   } 
-  const restarPages = (event) => {
+  const restar = (event) => {
     event.preventDefault();
-    setPages(pages => pages > 1 ? pages - 1 : pages)
-  }
-  const sumarLanguages = (event)=> {
-    event.preventDefault();
-    setLanguages(languages => languages + 1)
-  } 
-  const restarLanguages = (event) => {
-    event.preventDefault();
-    setLanguages(languages => languages > 1 ? languages - 1 : languages)
+    setQuantity(quantity => quantity > 1 ? quantity - 1 : quantity)
   }
   return (
-    <div className="d-inline-flex p-3 flex-column border border-3 rounded-3 border-dark">
       <div className="m-2">
-        <label htmlFor="pages" className="p-2">
-          Número de páginas
+        <label htmlFor="Webservices" className="p-2">
+          {label}
         </label>
-        <button onClick={sumarPages}>+</button>
-        <input 
-              name="pages"
-              value={pages}
+        <button onClick={sumar}>+</button>
+        <input
+              type="number" 
+              value={quantity}
               min={1} 
-              onChange={handleChangePages}
+              onChange={handleChange}
           />
-        <button onClick={restarPages}>-</button>
+        <button onClick={restar}>-</button>
       </div>
-      <div className="m-2">
-        <label htmlFor="languages" className="p-2">
-          Número de idiomas
-        </label>
-        <button onClick={sumarLanguages}>+</button>
-        <input 
-              name="languages"
-              min={1}
-              value={languages}
-              onChange= {handleChangeLanguages}
-          />
-        <button onClick={restarLanguages}>-</button>
-      </div>
-    </div>
   );
 }
 export default WebServices;
