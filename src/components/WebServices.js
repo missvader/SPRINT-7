@@ -1,4 +1,5 @@
 import React from "react";
+/*import {Services} from "./styled-components";*/
 // PENDIENTE: maquetacion componente 
 /*Refactorización del componente webservices. Lo he hecho más pequeño, pasando nuevas props que en cada llamada al componente se definen como pages o languages. De esta manera solo tenemos 3 funciones */
 //LOGICA
@@ -17,7 +18,7 @@ function WebServices({label, quantity, setQuantity}){
     setQuantity(quantity => quantity > 1 ? quantity - 1 : quantity)
   }
   return (
-      <div className="m-2">
+      <div className=" m-2">
         <label htmlFor="Webservices" className="p-2">
           {label}
         </label>

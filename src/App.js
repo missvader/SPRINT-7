@@ -63,20 +63,20 @@ function App() {
       <Routes>
         <Route path='/' element={<Welcome/>}/>
         <Route path='budget' element ={
-          <form className='form container border mt-3 p-3'>
-      <h5>¿ Qué quieres hacer ?</h5>
-      <div className='form-check mt-3'>
-        <input 
-          className="form-check-input" 
-          type="checkbox" 
-          name="web"
-          onChange={handleInputChange}
-          checked={datos.web}
-        />
-        <label className="form-check-label" htmlFor="web">
-          Una página web (500 €)
-        </label>
-      </div>
+          <form className='form container border mt-5 p-3'>
+            <h2>¿ Qué quieres hacer ?</h2>
+            <div className='form-check mt-3'>
+              <input 
+                className="form-check-input" 
+                type="checkbox" 
+                name="web"
+                onChange={handleInputChange}
+                checked={datos.web}
+              />
+              <label className="form-check-label" htmlFor="web">
+              Una página web (500 €)
+              </label>
+            </div>
       {/*Renderizado condicional de WebServices component*/
         datos.web && 
               
@@ -115,7 +115,7 @@ function App() {
           Una campaña de Google Ads (200 €)
         </label>
       </div>
-      <p className='mt-3'>Preu: {budget} €</p>
+      <p className='mt-3'>Precio: {budget} €</p>
      </form>
         }/>
       </Routes>
