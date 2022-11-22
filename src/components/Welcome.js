@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 function Welcome(){
   return(
-    <div>
-      <h1>Funciona el routing, esta es la welcome page</h1>
-      <Link to="budget">Click si quieres un presupuesto</Link>
+    <div className="welcome">
+      <h1 className="title">ENCUENTRA LA SOLUCIÓN QUE NECESITAS PARA TU EMPRESA</h1>
+      <Link to="budget" className="link">Quiero saber más</Link>
     </div>
   )
 }
