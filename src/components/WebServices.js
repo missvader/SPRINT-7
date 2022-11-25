@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import {BsQuestionCircleFill} from "react-icons/bs";
 import './ModalInfo.css';
 import ModalInfo from "./ModalInfo";
@@ -24,7 +24,11 @@ function WebServices({label, quantity, setQuantity}){
   }
   /*Estado para el modal-info*/
   const [Info, setInfo] = useState(false);
-  
+  /*función para hacer que cambie el estado del modal, importante el preventDefault  */
+  const changeModal = (event) => {
+    event.preventDefault();
+    setInfo(!Info);
+  }
 
   console.log("estado del modal" , Info)
   return (
@@ -40,12 +44,13 @@ function WebServices({label, quantity, setQuantity}){
               onChange={handleChange}
           />
         <button className="btn btn-danger" onClick={restar}>-</button>
-        <button className="btn border-0" onClick ={()=> setInfo(true)} ><BsQuestionCircleFill/></button>
+        <button className="btn border-0" onClick ={changeModal} ><BsQuestionCircleFill/></button>
         <ModalInfo
           info = {Info}
-          setInfo = {setInfo}>
+          changeModal = {changeModal}
+        >
             <p>Seleccione el numero de {label} que desea en su sitio web</p>
-          </ModalInfo>
+        </ModalInfo>
           
       </div>
   );

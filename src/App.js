@@ -86,6 +86,7 @@ function App() {
                       label={"páginas"}
                       quantity={pages}
                       setQuantity={setPages}
+                      
                     />
                     <WebServices
                       label={"idiomas"}
