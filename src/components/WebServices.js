@@ -49,7 +49,7 @@ function WebServices({label, quantity, setQuantity}){
           info = {Info}
           changeModal = {changeModal}
         >
-            <p>Seleccione el numero de {label} que desea en su sitio web</p>
+            <p className="text-center">Seleccione el numero de {label} que desea en su sitio web</p>
         </ModalInfo>
           
       </div>
