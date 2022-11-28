@@ -1,3 +1,7 @@
+.form{
+  margin: auto;
+}
+
 .number{
   width: 3rem;
 }
@@ -35,4 +39,16 @@ h2{
   font-size: 3rem;
   font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   color: #DC5F00;
+}
+.submit{
+  background-color: #DC5F00;
+  border-radius: 15px;
+  border: none;
+  color: whitesmoke;
+}
+.submit:hover{
+  font-weight: bolder;
+  background-color: #DC5F00;
+  font-size: larger;
+  color: whitesmoke;
 }

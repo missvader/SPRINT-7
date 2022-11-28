@@ -32,7 +32,7 @@ function WebServices({label, quantity, setQuantity}){
 
   console.log("estado del modal" , Info)
   return (
-      <div className=" m-2 d-flex">
+      <div className="webservices m-2 d-flex">
         <label htmlFor="Webservices" className="p-2">
           Número de {label} :
         </label>

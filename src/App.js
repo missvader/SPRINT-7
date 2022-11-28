@@ -5,6 +5,7 @@ import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Welcome from "./components/Welcome";
 
+
 function App() {
   //HOOKS
   /*Checkboxes, inputs controlados. Creamos un unico estado en formato array para centralizar la situacion de las 3 casillas -> estado inicial false pq no estan checked*/
@@ -64,8 +65,9 @@ function App() {
         <Route
           path="budget"
           element={
-            <form className="form container border mt-5 p-3">
-              <h2>¿ Qué quieres hacer ?</h2>
+            <form className="form container border mt-5 p-3 row">
+              <div className="col col-md-6">
+              <h2 >¿ Qué quieres hacer ?</h2>
               <div className="form-check mt-3">
                 <input
                   className="form-check-input"
@@ -86,7 +88,6 @@ function App() {
                       label={"páginas"}
                       quantity={pages}
                       setQuantity={setPages}
-                      
                     />
                     <WebServices
                       label={"idiomas"}
@@ -121,7 +122,27 @@ function App() {
                   Una campaña de Google Ads (200 €)
                 </label>
               </div>
-              <p className="mt-3">Precio: {budget} €</p>
+            <p className="mt-3">Precio: {budget} €</p>
+              
+              
+              
+              </div>
+              <div className="col col-md-6 ">
+                <h2>Cliente</h2>
+                <div className="form  pt-3">
+                  <label htmlFor="userName" className="d-block">Indique su nombre:</label>
+                  <input type="text"  minLength="3" size="30" required></input>
+                </div>
+                <div className="form  pt-3">
+                  <label htmlFor="userSurname" className="d-block">Indique su apellido:</label>
+                  <input type="text" minLength="3"  size="30" required></input>
+                </div>
+                <div className="form  pt-3">
+                  <label htmlFor="budgetName" className="d-block">Nombre del presupuesto:</label>
+                  <input type="text" minLength="3"  size="30" required></input>
+                </div>
+                <button type="button" className="btn submit mt-5" >Guardar presupuesto</button>
+              </div>
             </form>
           }
         />
@@ -131,3 +152,4 @@ function App() {
 }
 
 export default App;
+
