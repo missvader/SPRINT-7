@@ -30,17 +30,17 @@ function WebServices({label, quantity, setQuantity}){
     setInfo(!Info);
   }
 
-  console.log("estado del modal" , Info)
+  /*console.log("estado del modal" , Info)*/
   return (
       <div className="webservices m-2 d-flex">
         <label htmlFor="Webservices" className="p-2">
           Número de {label} :
         </label>
         <button className="btn btn-danger" onClick={sumar}>+</button>
-        <input className="number border-0"
+        <input className="number border-0 "
               type="number" 
               value={quantity}
-              min={1} 
+              min={0} 
               onChange={handleChange}
           />
         <button className="btn btn-danger" onClick={restar}>-</button>

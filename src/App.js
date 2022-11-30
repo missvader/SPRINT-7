@@ -7,57 +7,98 @@ import Welcome from "./components/Welcome";
 
 
 function App() {
-  //HOOKS
-  /*Checkboxes, inputs controlados. Creamos un unico estado en formato array para centralizar la situacion de las 3 casillas -> estado inicial false pq no estan checked*/
-  const [datos, setDatos] = useState({
-    web: false,
-    seo: false,
-    google: false,
-  });
-  /*Estado para guardar los datos de pages y languages*/
+//HOOKS
+  /*Checkboxes, inputs controlados. Creamos una nueva variable budget para tener todos los estados dentro de ella */
+  const [budget, setBudget] = useState({
+    
+      web: false,
+      seo: false,
+      google: false,
+      budgetName: "",
+      clientName:"",
+    }
+    
+  );
+  
   const [pages, setPages] = useState(1);
   const [languages, setLanguages] = useState(1);
-  
+  const [totalPrice, setTotalPrice] = useState(0);
   //USE EFFECT para mostrar el local storage al renderizar
-  useEffect(() => {
-    let data1 = localStorage.getItem("datos");
-    if (data1) {
-      setDatos(JSON.parse(data1));
+  /*useEffect(() => {
+    let data = localStorage.getItem("budget");
+    if (data) {
+      setBudget(JSON.parse(data));
     }
   }, []);
   useEffect(() => {
-    let data2 = localStorage.getItem("pages");
-    if (data2) {
-      setPages(JSON.parse(data2));
+    let dataPages = localStorage.getItem("pages");
+    if (dataPages) {
+      setPages(JSON.parse(dataPages));
     }
   }, []);
   useEffect(() => {
-    let data3 = localStorage.getItem("languages");
-    if (data3) {
-      setLanguages(JSON.parse(data3));
+    let dataLang = localStorage.getItem("languages");
+    if (dataLang) {
+      setLanguages(JSON.parse(dataLang));
     }
-  }, []);
-  //USE EFFECT para guardar los datos en localStorage
-  useEffect(() => {
-    localStorage.setItem("datos", JSON.stringify(datos));
+  }, []);*/
+  //LOCAL STORAGE
+  /*useEffect(() => {
+    localStorage.setItem("budget", JSON.stringify(budget));
     localStorage.setItem("pages", JSON.stringify(pages));
     localStorage.setItem("languages", JSON.stringify(languages));
-  }, [datos, pages, languages]);
+  }, [budget, pages, languages]);*/
+ 
+  // funcion para guardar los datos en localStorage
+  const saveBudget= ()=>{
+    localStorage.setItem("budget", JSON.stringify(budget));
+    localStorage.setItem("pages", JSON.stringify(pages));
+    localStorage.setItem("languages", JSON.stringify(languages));
+  };
+  useEffect(()=>{
+    saveBudget();
+    // eslint-disable-next-line
+  }, [budget, pages, languages])
+  const getBudget =()=>{
+    let newBudget = JSON.parse(localStorage.getItem("budget"));
+    newBudget && setBudget(newBudget);
+    let newPages = JSON.parse(localStorage.getItem("pages"));
+    newPages && setPages(newPages);
+    let newLang = JSON.parse(localStorage.getItem("languages"));
+    newLang && setLanguages(newLang);
+  }
+  useEffect(()=>{
+    getBudget();
+  },[])
   //LOGIC
-  /*esta es la funcion que maneja el evento onChange de los checkbox:
-  simplemente maneja el estado ejecutanto el setDatos, que conserva los datos ya existentes con el spread operator y agrega los nuevos datos en funcion de si se selecciona o deseleciona el checkbox */
+  /*esta es la funcion que maneja el evento onChange
+  simplemente maneja el estado ejecutanto el setBudget, que conserva los datos ya existentes con el spread operator y agrega los nuevos datos (con un condicional validamos si es checkbox o no, y asi accedemos tanto a checkbox como a input text)*/
   const handleInputChange = (event) => {
-    setDatos({
-      ...datos,
-      [event.target.name]: !datos[event.target.name],
+    const {name, type, checked, value} = event.target
+    setBudget((budget)=>{
+      return{
+        ...budget,
+        [name]:
+          type === "checkbox" ? checked : value
+      }
+      
+      
     });
   };
-  //variables para los precios (en webPrice incluyo el precio de pages y lang)
-  const webPrice = datos.web ? 500 + pages * languages * 30 : 0;
-  const seoPrice = datos.seo ? 300 : 0;
-  const googlePrice = datos.google ? 200 : 0;
-  const budget = webPrice + seoPrice + googlePrice;
-
+  
+  //function para los precios (en webPrice incluyo el precio de pages y lang)
+  const calculateTotal = ()=>{
+    let webPrice = budget.web ? 500 + pages * languages * 30 : 0;
+    let seoPrice = budget.seo ? 300 : 0;
+    let googlePrice = budget.google ? 200 : 0;
+    let total = webPrice + seoPrice + googlePrice;
+    setTotalPrice(total);
+  }
+  useEffect(()=> {
+    calculateTotal();
+    // eslint-disable-next-line
+  },[budget, pages, languages])
+  
   return (
     <div className="App">
       <Routes>
@@ -65,7 +106,7 @@ function App() {
         <Route
           path="budget"
           element={
-            <form className="form container border mt-5 p-3 row">
+            <form className="form container border mt-5 p-3 row" >
               <div className="col col-md-6">
               <h2 >¿ Qué quieres hacer ?</h2>
               <div className="form-check mt-3">
@@ -73,8 +114,9 @@ function App() {
                   className="form-check-input"
                   type="checkbox"
                   name="web"
+                  checked={budget.web}
+                  /*onChange={()=>handleInputChange("web", !budget.web)}*/
                   onChange={handleInputChange}
-                  checked={datos.web}
                 />
                 <label className="form-check-label" htmlFor="web">
                   Una página web (500 €)
@@ -82,7 +124,7 @@ function App() {
               </div>
               {
                 /*Renderizado condicional de WebServices component*/
-                datos.web && (
+                budget.web && (
                   <div className="d-inline-flex p-3 flex-column border border-3 rounded-3 border-dark">
                     <WebServices
                       label={"páginas"}
@@ -103,7 +145,8 @@ function App() {
                   className="form-check-input"
                   type="checkbox"
                   name="seo"
-                  checked={datos.seo}
+                  checked={budget.seo}
+                  /*onChange={()=>handleInputChange("seo", !budget.seo)}*/
                   onChange={handleInputChange}
                 />
                 <label className="form-check-label" htmlFor="seo">
@@ -115,33 +158,45 @@ function App() {
                   className="form-check-input"
                   type="checkbox"
                   name="google"
-                  checked={datos.google}
+                  checked={budget.google}
+                  /*onChange={()=>handleInputChange("google", !budget.google)}*/
                   onChange={handleInputChange}
                 />
                 <label className="form-check-label" htmlFor="google">
                   Una campaña de Google Ads (200 €)
                 </label>
               </div>
-            <p className="mt-3">Precio: {budget} €</p>
-              
-              
+            <p className="mt-3">Precio: {totalPrice} €</p>
               
               </div>
               <div className="col col-md-6 ">
                 <h2>Cliente</h2>
                 <div className="form  pt-3">
-                  <label htmlFor="userName" className="d-block">Indique su nombre:</label>
-                  <input type="text"  minLength="3" size="30" required></input>
-                </div>
-                <div className="form  pt-3">
-                  <label htmlFor="userSurname" className="d-block">Indique su apellido:</label>
-                  <input type="text" minLength="3"  size="30" required></input>
+                  <label htmlFor="clientName" className="d-block">Indique su nombre:</label>
+                  <input 
+                    type="text" 
+                    name="clientName"
+                    minLength="3" 
+                    onChange={handleInputChange}
+                    /*onChange={(e)=> handleInputChange("clientName", e)} */
+                    required />
                 </div>
                 <div className="form  pt-3">
                   <label htmlFor="budgetName" className="d-block">Nombre del presupuesto:</label>
-                  <input type="text" minLength="3"  size="30" required></input>
+                  <input 
+                    type="text" 
+                    name="budgetName"
+                    minLength="3"  
+                    onChange={handleInputChange}
+                    /*onChange={(e)=> handleInputChange("budgetName", e)}*/
+                    required />
                 </div>
-                <button type="button" className="btn submit mt-5" >Guardar presupuesto</button>
+                <button type="submit" className="guardar mt-5">
+                  <span className="circle" aria-hidden="true">
+                  <span className="icon arrow"></span>
+                  </span>
+                  <span className="button-text">Guardar</span>
+                </button>
               </div>
             </form>
           }
