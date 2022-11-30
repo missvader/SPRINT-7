@@ -4,51 +4,25 @@ import WebServices from "./components/WebServices";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Welcome from "./components/Welcome";
-
+import Budget from "./components/Budget";
+import { Link } from "react-router-dom";
 
 function App() {
-//HOOKS
+//HOOKS ESTADOS
   /*Checkboxes, inputs controlados. Creamos una nueva variable budget para tener todos los estados dentro de ella */
   const [budget, setBudget] = useState({
-    
       web: false,
       seo: false,
       google: false,
       budgetName: "",
       clientName:"",
     }
-    
   );
-  
   const [pages, setPages] = useState(1);
   const [languages, setLanguages] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
-  //USE EFFECT para mostrar el local storage al renderizar
-  /*useEffect(() => {
-    let data = localStorage.getItem("budget");
-    if (data) {
-      setBudget(JSON.parse(data));
-    }
-  }, []);
-  useEffect(() => {
-    let dataPages = localStorage.getItem("pages");
-    if (dataPages) {
-      setPages(JSON.parse(dataPages));
-    }
-  }, []);
-  useEffect(() => {
-    let dataLang = localStorage.getItem("languages");
-    if (dataLang) {
-      setLanguages(JSON.parse(dataLang));
-    }
-  }, []);*/
+  
   //LOCAL STORAGE
-  /*useEffect(() => {
-    localStorage.setItem("budget", JSON.stringify(budget));
-    localStorage.setItem("pages", JSON.stringify(pages));
-    localStorage.setItem("languages", JSON.stringify(languages));
-  }, [budget, pages, languages]);*/
- 
   // funcion para guardar los datos en localStorage
   const saveBudget= ()=>{
     localStorage.setItem("budget", JSON.stringify(budget));
@@ -81,8 +55,6 @@ function App() {
         [name]:
           type === "checkbox" ? checked : value
       }
-      
-      
     });
   };
   
@@ -98,13 +70,23 @@ function App() {
     calculateTotal();
     // eslint-disable-next-line
   },[budget, pages, languages])
-  
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<Welcome />} />
+        <Route path="/showBudget" 
+              element={<Budget 
+                        client ={budget.clientName}                  
+                        budgetName = {budget.budgetName}
+                        web ={budget.web}
+                        numPages = {pages}
+                        numLang = {languages}
+                        seo = {budget.seo}
+                        google ={budget.google}
+                        total ={totalPrice}
+                       />} />
         <Route
-          path="budget"
+          path="form"
           element={
             <form className="form container border mt-5 p-3 row" >
               <div className="col col-md-6">
@@ -115,7 +97,6 @@ function App() {
                   type="checkbox"
                   name="web"
                   checked={budget.web}
-                  /*onChange={()=>handleInputChange("web", !budget.web)}*/
                   onChange={handleInputChange}
                 />
                 <label className="form-check-label" htmlFor="web">
@@ -146,7 +127,6 @@ function App() {
                   type="checkbox"
                   name="seo"
                   checked={budget.seo}
-                  /*onChange={()=>handleInputChange("seo", !budget.seo)}*/
                   onChange={handleInputChange}
                 />
                 <label className="form-check-label" htmlFor="seo">
@@ -159,7 +139,6 @@ function App() {
                   type="checkbox"
                   name="google"
                   checked={budget.google}
-                  /*onChange={()=>handleInputChange("google", !budget.google)}*/
                   onChange={handleInputChange}
                 />
                 <label className="form-check-label" htmlFor="google">
@@ -178,7 +157,6 @@ function App() {
                     name="clientName"
                     minLength="3" 
                     onChange={handleInputChange}
-                    /*onChange={(e)=> handleInputChange("clientName", e)} */
                     required />
                 </div>
                 <div className="form  pt-3">
@@ -188,19 +166,22 @@ function App() {
                     name="budgetName"
                     minLength="3"  
                     onChange={handleInputChange}
-                    /*onChange={(e)=> handleInputChange("budgetName", e)}*/
                     required />
                 </div>
-                <button type="submit" className="guardar mt-5">
-                  <span className="circle" aria-hidden="true">
-                  <span className="icon arrow"></span>
-                  </span>
-                  <span className="button-text">Guardar</span>
-                </button>
+                <Link to="/showBudget">
+                  <button className="guardar mt-5">
+                    <span className="circle" aria-hidden="true">
+                    <span className="icon arrow"></span>
+                    </span>
+                    <span className="button-text">Presupuesto</span>
+                  </button>
+                </Link>
+                
               </div>
             </form>
           }
         />
+        
       </Routes>
     </div>
   );
