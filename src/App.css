@@ -1,6 +1,6 @@
-.form{
+/*.form{
   margin: auto;
-}
+}*/
 
 .number{
   width: 3rem;
@@ -128,19 +128,45 @@ button {
  button:hover .button-text {
   color: #fff;
  }
- .card {
-  /*width: 50%;*/
-  /*height: 20rem;*/
-  background: rgb(255, 255, 255, 0.5);
-  border-radius: 0.4em;
-  box-shadow: 0.3em 0.3em 0.7em #00000015;
-  transition: border 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  border: rgb(250, 250, 250) 0.2em solid;
+ h4{
+  color:#DC5F00;
  }
- 
- .card:hover {
-  border: #DC5F00 0.2em solid;
- }
- .container{
-  height: 100vh;
- }
+ .button-sort {
+  font-size: 1rem;
+  color: #282936;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  border: none;
+  background: none;
+  text-transform: uppercase;
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-duration: 400ms;
+  transition-property: color;
+}
+
+.button-sort:focus,
+.button-sort:hover {
+  color: #282936;
+}
+
+.button-sort:focus:after,
+.button-sort:hover:after {
+  width: 100%;
+  left: 0%;
+}
+
+.button-sort:after {
+  content: "";
+  pointer-events: none;
+  bottom: -2px;
+  left: 50%;
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background-color: #DC5F00;
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-duration: 400ms;
+  transition-property: width, left;
+}

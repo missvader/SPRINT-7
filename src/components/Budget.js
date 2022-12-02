@@ -1,26 +1,45 @@
 import React from "react";
-/*import {useState} from "react";*/
-import "../App.css";
-function Budget(props){
-  //creamos variable para usuarios, estado inicial vacio 
-  /*const [users, setUsers ]= useState([]);
-  console.log(users)*/
+import "./Budget.css";
+function Budget({presupuestos}){
+  
   return(
-   <div className="container row justify-content-center align-items-center  ">
-    <div className="card col-md-6 ">
-      <h1 className="card-title text-center">PRESUPUESTO</h1>
-      <ul className="list-group list-group-flush">
-        <li className="list-group-item">Cliente:</li>
-        <li className="list-group-item">Presupuesto:</li>
-        <li className="list-group-item">Fecha:</li>
-        <li className="list-group-item">Página web</li>
-        <li className="list-group-item">Num pag</li>
-        <li className="list-group-item">Num lang</li>
-        <li className="list-group-item">Consultoria SEO</li>
-        <li className="list-group-item">Campaña Google Adds</li>
-        <li className="list-group-item">TOTAL:</li>
-      </ul>
-    </div>
+   <div className="col">
+    <table className="table table-responsive table-hover">
+      <thead className=" text-center">
+        <tr>
+          <th>#</th>
+          <th>PRESUPUESTO</th>
+          <th>CLIENTE</th>
+          <th>FECHA</th>
+          <th>WEB</th>
+          <th>IDIOMAS WEB</th>
+          <th>PAGINAS WEB</th>
+          <th>SEO</th>
+          <th>GOOGLE ADDS</th>
+          <th>TOTAL</th>
+          <th>ELIMINAR</th>
+        </tr>
+      </thead>
+      <tbody className="text-center align-baseline">
+        {
+          presupuestos.map((newBudget, index)=>(
+            <tr>
+              <td>{index + 1}</td>
+              <td>{newBudget.presupuesto}</td>
+              <td>{newBudget.cliente}</td>
+              <td>{newBudget.fecha}</td>
+              <td>{newBudget.web ? "si" : "no"}</td>
+              <td>{newBudget.idiomas}</td>
+              <td>{newBudget.paginas}</td>
+              <td>{newBudget.seo ? "si" : "no"}</td>
+              <td>{newBudget.google ? "si" : "no"}</td>
+              <td>{newBudget.precioTotal} € </td>
+              <td></td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table> 
    </div> 
     
   )
