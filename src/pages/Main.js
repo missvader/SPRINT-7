@@ -75,6 +75,14 @@ const limpiarForm = () => {
     calculateTotal();
     // eslint-disable-next-line
   },[web, seo, google, pages, languages])
+
+  //Funciones para los botones ORDENAR BUDGETS
+  function sortAlpha(){
+    let sortedAlpha = presupuestos.sort((a,b) =>{
+      return a.cliente.toLowerCase() > b.cliente.toLowerCase() ? 1 : -1;
+    });
+    setPresupuestos([...sortedAlpha]);
+  }
   
   return(
    <div className="container-fluid  mt-3 ">
@@ -172,7 +180,7 @@ const limpiarForm = () => {
       <div className="col-12 col-md-7  ">
         <h2 className="text-center mb-5">Presupuestos</h2>
         <div className="d-flex justify-content-center mb-5">
-          <button className="button-sort">Ordena alfabeticamente</button>
+          <button className="button-sort" onClick={()=>sortAlpha(presupuestos)}>Ordena alfabeticamente</button>
           <button className="button-sort ms-3 me-3">Ordena por fecha </button>
           <button className="button-sort">Reinicia orden</button>
         </div>
