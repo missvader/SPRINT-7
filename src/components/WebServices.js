@@ -40,7 +40,7 @@ function WebServices({label, quantity, setQuantity}){
         <input className="number border-0 "
               type="number" 
               value={quantity}
-              min={0} 
+              min={1} 
               onChange={handleChange}
           />
         <button className="btn btn-danger" onClick={restar}>-</button>

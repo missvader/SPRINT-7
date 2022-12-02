@@ -50,8 +50,8 @@ const limpiarForm = () => {
   setWeb(false);
   setSeo(false);
   setGoogle(false);
-  setPages(0);
-  setLanguages(0);
+  setPages(1);
+  setLanguages(1);
   setTotalPrice(0);
   setBudgetName("");
   setClientName("");
@@ -77,121 +77,109 @@ const limpiarForm = () => {
   },[web, seo, google, pages, languages])
   
   return(
-    <div className="container border ">
-              <div className="row">
-              <form className="form container border mt-5  ms-5 ps-5 p-3  col-12 col-md-6 col-lg-4" onSubmit={saveButton}>
-              
-              <div className="">
-              <h2 className="">¿ Qué quieres hacer ?</h2>
-              <div className="form-check mt-3 ">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  name="web"
-                  checked={web}
-                  onChange={(e)=>setWeb(!web)}
-                />
-                <label className="form-check-label" htmlFor="web">
-                  Una página web (500 €)
-                </label>
-              </div>
-              {
-                /*Renderizado condicional de WebServices component*/
-                web && (
-                  <div className="d-inline-flex p-3 flex-column border border-3 rounded-3 border-dark">
-                    <WebServices
-                      label={"páginas"}
-                      quantity={pages}
-                      setQuantity={setPages}
-                    />
-                    <WebServices
-                      label={"idiomas"}
-                      quantity={languages}
-                      setQuantity={setLanguages}
-                    />
-                  </div>
-                )
-              }
-
-              <div className="form-check mt-2">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  name="seo"
-                  checked={seo}
-                  onChange={(e)=>setSeo(!seo)}
-                />
-                <label className="form-check-label" htmlFor="seo">
-                  Una consultoria SEO (300 €)
-                </label>
-              </div>
-              <div className="form-check mt-2">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  name="google"
-                  checked={google}
-                  onChange={(e)=>setGoogle(!google)}
-                />
-                <label className="form-check-label" htmlFor="google">
-                  Una campaña de Google Ads (200 €)
-                </label>
-              </div>
-            <p className="mt-3">Precio: {totalPrice} €</p>
-              
-              </div>
-              <div className="mt-4">
-                <h2>Cliente</h2>
-                <div className="form  pt-3">
-                  <label htmlFor="clientName" className="d-block">Indique su nombre:</label>
-                  <input 
-                    type="text" 
-                    name="clientName"
-                    value={clientName}
-                    minLength="3" 
-                    onChange={(e)=> setClientName(e.target.value)}
-                    required />
-                </div>
-                <div className="form  pt-3">
-                  <label htmlFor="budgetName" className="d-block">Nombre del presupuesto:</label>
-                  <input 
-                    type="text" 
-                    name="budgetName"
-                    value={budgetName}
-                    minLength="3"  
-                    onChange={(e)=> setBudgetName(e.target.value)}
-                    required />
-                </div>
-                <div className=" d-flex justify-content-center">
-                <button className="guardar mt-5 " type="submit">
-                  <span className="circle" aria-hidden="true">
-                  <span className="icon arrow"></span>
-                  </span>
-                  <span className="button-text">GUARDAR</span>
-                </button>
-                </div>
-                
-              </div>
-            </form>
-            <div className="col-12 col-md-6 col-lg-8 mt-5 me-5 p-3 border">
-            <h2 className="text-center">Presupuestos</h2> 
-            <div className="d-flex justify-content-center">
-              <button className="button-sort">Ordena alfabeticamente</button>
-              <button className="button-sort ms-3 me-3">Ordena por fecha </button>
-              <button className="button-sort">Reinicia orden</button>
-            </div>
-            <Budget
-              presupuestos={presupuestos}
+   <div className="container-fluid  mt-3 ">
+    <div className="row">
+      <div className=" col-12 col-md-5   d-flex justify-content-center">
+        <form className="form " onSubmit={saveButton}>
+          <h2 className="">¿Qué quieres hacer?</h2>
+          <div className="form-check mt-3 ">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              name="web"
+              checked={web}
+              onChange={(e)=>setWeb(!web)}
             />
+            <label className="form-check-label" htmlFor="web">
+              Una página web (500 €)
+            </label>
+          </div>
+          {
+          /*Renderizado condicional de WebServices component*/
+            web && (
+              <div className="d-inline-flex p-3 flex-column border border-3 rounded-3 border-dark">
+                <WebServices
+                  label={"páginas"}
+                  quantity={pages}
+                  setQuantity={setPages}
+                />
+                <WebServices
+                  label={"idiomas"}
+                  quantity={languages}
+                  setQuantity={setLanguages}
+                />
               </div>
-            
-            
-            
-          </div> 
-          </div> 
-          
-        
-        
+            )
+          }
+          <div className="form-check mt-2">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              name="seo"
+              checked={seo}
+              onChange={(e)=>setSeo(!seo)}
+            />
+            <label className="form-check-label" htmlFor="seo">
+              Una consultoria SEO (300 €)
+            </label>
+          </div>
+          <div className="form-check mt-2">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              name="google"
+              checked={google}
+              onChange={(e)=>setGoogle(!google)}
+            />
+            <label className="form-check-label" htmlFor="google">
+              Una campaña de Google Ads (200 €)
+            </label>
+          </div>
+          <p className="mt-3">Precio: {totalPrice} €</p>
+          <div className="mt-4">
+            <h2>Cliente</h2>
+            <div className="form  pt-3">
+              <label htmlFor="clientName" className="d-block">Indique su nombre:</label>
+                <input 
+                  type="text" 
+                  name="clientName"
+                  value={clientName}
+                  minLength="3" 
+                  onChange={(e)=> setClientName(e.target.value)}
+                  required />
+            </div>
+            <div className="form  pt-3">
+              <label htmlFor="budgetName" className="d-block">Nombre del presupuesto:</label>
+              <input 
+                type="text" 
+                name="budgetName"
+                value={budgetName}
+                minLength="3"  
+                onChange={(e)=> setBudgetName(e.target.value)}
+                required />
+            </div>
+            <div className=" d-flex justify-content-end">
+              <button className="guardar mt-5 " type="submit">
+                <span className="circle" aria-hidden="true">
+                <span className="icon arrow"></span>
+                </span>
+                <span className="button-text">GUARDAR</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div className="col-12 col-md-7  ">
+        <h2 className="text-center mb-5">Presupuestos</h2>
+        <div className="d-flex justify-content-center mb-5">
+          <button className="button-sort">Ordena alfabeticamente</button>
+          <button className="button-sort ms-3 me-3">Ordena por fecha </button>
+          <button className="button-sort">Reinicia orden</button>
+        </div>
+        <Budget  presupuestos={presupuestos}/>
+      </div>
+    </div>
+   </div>
   )
 }
 export default Main;

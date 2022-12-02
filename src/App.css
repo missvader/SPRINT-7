@@ -170,3 +170,7 @@ button {
   transition-duration: 400ms;
   transition-property: width, left;
 }
+th{
+  color:#DC5F00;
+  font-size: 0.8rem;
+}
