@@ -26,6 +26,15 @@ const getPresupuestos = () =>{
   const [budgetName, setBudgetName] = useState("");
   const [clientName, setClientName] = useState("");
   
+
+/*estado para el "contador" que usaremos para crear id consecutivas en los presupuestos */
+  const [countId, setCountId] = useState(1);
+/*funcion para generar id en presupuesto*/
+const generarId = () => {
+  setCountId(countId + 1);
+  return countId;
+}
+
  /*esta es la función que servirá para guardar el presupuesto en localStorage al hacer submit en el boton guardar */
 
  const saveButton = (e) => {
@@ -36,6 +45,7 @@ const getPresupuestos = () =>{
     {presupuesto : budgetName, 
      cliente: clientName,
      fecha : new Date().toLocaleDateString(),
+     id: generarId(),
      web: web,
      seo: seo,
      google: google, 
@@ -43,7 +53,7 @@ const getPresupuestos = () =>{
      idiomas:languages,
      precioTotal :totalPrice}
   //a continuación guardamos en el array de data
-  setPresupuestos([...presupuestos, newBudget]);
+  setPresupuestos([...presupuestos, newBudget])
   limpiarForm();
 }
 const limpiarForm = () => {
@@ -78,11 +88,24 @@ const limpiarForm = () => {
 
   //Funciones para los botones ORDENAR BUDGETS
   function sortAlpha(){
-    let sortedAlpha = presupuestos.sort((a,b) =>{
-      return a.cliente.toLowerCase() > b.cliente.toLowerCase() ? 1 : -1;
-    });
-    setPresupuestos([...sortedAlpha]);
+    const alpha =  presupuestos.sort((a,b)=>{
+        return a.cliente.toLowerCase() > b.cliente.toLowerCase() ? 1 : -1;
+      })
+    setPresupuestos([...alpha])
   }
+
+  function sortByDate(){
+    const byDate = presupuestos.sort((a,b)=>{
+      return a.fecha.toLowerCase() > b.fecha.toLowerCase() ? 1 : -1;
+    })
+    setPresupuestos([...byDate])
+  }
+  //idea para esta función--> crear una función que dé un id consecutivo con un contador a cada presupuesto que guardemos, asi cuando queramos volver al orden inicial de presupuestos solo tenemos que sort los id de menor a mayor (pq ahora me encuentro con que la key del presupuesto guardado se cambia tambien según el orden que pongamos con las anteriores funciones de ordenar)
+  function resetOrdenInicial(){
+    const ordenInicial = presupuestos.sort((a,b) => a.id - b.id)
+    setPresupuestos([...ordenInicial])  
+  }
+  
   
   return(
    <div className="container-fluid  mt-3 ">
@@ -181,10 +204,10 @@ const limpiarForm = () => {
         <h2 className="text-center mb-5">Presupuestos</h2>
         <div className="d-flex justify-content-center mb-5">
           <button className="button-sort" onClick={()=>sortAlpha(presupuestos)}>Ordena alfabeticamente</button>
-          <button className="button-sort ms-3 me-3">Ordena por fecha </button>
-          <button className="button-sort">Reinicia orden</button>
+          <button className="button-sort ms-3 me-3" onClick={()=>sortByDate(presupuestos)}>Ordena por fecha </button>
+          <button className="button-sort" onClick={()=>resetOrdenInicial(presupuestos)}>Reinicia orden</button>
         </div>
-        <Budget  presupuestos={presupuestos}/>
+        <Budget  presupuestos={presupuestos} />
       </div>
     </div>
    </div>
