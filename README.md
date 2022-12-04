@@ -13,6 +13,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 </ol>
 
 ## Demo
+![BudgetApp](./src/assets/BudgetApp.gif.gif)
 ## Available Scripts
 
 In the project directory, you can run:
