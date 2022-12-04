@@ -37,7 +37,6 @@ const getPresupuestos = () =>{
     {presupuesto : budgetName, 
      cliente: clientName,
      fecha : new Date().toLocaleDateString(),
-     /*id: generarId(),*/
      web: web,
      seo: seo,
      google: google, 
