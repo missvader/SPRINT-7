@@ -27,14 +27,6 @@ const getPresupuestos = () =>{
   const [clientName, setClientName] = useState("");
   
 
-/*estado para el "contador" que usaremos para crear id consecutivas en los presupuestos */
-  const [countId, setCountId] = useState(1);
-/*funcion para generar id en presupuesto*/
-const generarId = () => {
-  setCountId(countId + 1);
-  return countId;
-}
-
  /*esta es la función que servirá para guardar el presupuesto en localStorage al hacer submit en el boton guardar */
 
  const saveButton = (e) => {
@@ -45,7 +37,7 @@ const generarId = () => {
     {presupuesto : budgetName, 
      cliente: clientName,
      fecha : new Date().toLocaleDateString(),
-     id: generarId(),
+     /*id: generarId(),*/
      web: web,
      seo: seo,
      google: google, 
@@ -86,26 +78,32 @@ const limpiarForm = () => {
     // eslint-disable-next-line
   },[web, seo, google, pages, languages])
 
-  //Funciones para los botones ORDENAR BUDGETS
+  //Funciones para los botones ORDENAR BUDGETS. Antes de nada, necesitamos guradar el estado inicial de presupuestos de algun manera, de lo contrario, el localStorage tambien se modificará al ordenarlos y no podremos hacer un reset al estado inicial.
+  //creamos variable para guardar defaultpresupuestos(que será una copia del original)
+  //estado para presupuestosList, que al cambiar presupuestos con un useEffect se inicializará en la lista de presupuestos. Asi podemos trabajar con ella sin que localStorage se modifique y conservando el valor default para hacer el reset
+  const initialPresupuestos =[...presupuestos]
+  const [presupuestosList, setPresupuestosList]= useState([])
+
+  useEffect(()=>{
+    setPresupuestosList([...presupuestos]);
+  }, [presupuestos])
+  
   function sortAlpha(){
-    const alpha =  presupuestos.sort((a,b)=>{
+    const alpha =  presupuestosList.sort((a,b)=>{
         return a.cliente.toLowerCase() > b.cliente.toLowerCase() ? 1 : -1;
       })
-    setPresupuestos([...alpha])
+    setPresupuestosList([...alpha])
   }
 
   function sortByDate(){
-    const byDate = presupuestos.sort((a,b)=>{
+    const byDate = presupuestosList.sort((a,b)=>{
       return a.fecha.toLowerCase() > b.fecha.toLowerCase() ? 1 : -1;
     })
-    setPresupuestos([...byDate])
+    setPresupuestosList([...byDate])
   }
-  //idea para esta función--> crear una función que dé un id consecutivo con un contador a cada presupuesto que guardemos, asi cuando queramos volver al orden inicial de presupuestos solo tenemos que sort los id de menor a mayor (pq ahora me encuentro con que la key del presupuesto guardado se cambia tambien según el orden que pongamos con las anteriores funciones de ordenar)
-  function resetOrdenInicial(){
-    const ordenInicial = presupuestos.sort((a,b) => a.id - b.id)
-    setPresupuestos([...ordenInicial])  
-  }
-  
+  function initial(){
+      setPresupuestosList([...initialPresupuestos])
+    }
   
   return(
    <div className="container-fluid  mt-3 ">
@@ -202,12 +200,28 @@ const limpiarForm = () => {
       </div>
       <div className="col-12 col-md-7  ">
         <h2 className="text-center mb-5">Presupuestos</h2>
-        <div className="d-flex justify-content-center mb-5">
-          <button className="button-sort" onClick={()=>sortAlpha(presupuestos)}>Ordena alfabeticamente</button>
-          <button className="button-sort ms-3 me-3" onClick={()=>sortByDate(presupuestos)}>Ordena por fecha </button>
-          <button className="button-sort" onClick={()=>resetOrdenInicial(presupuestos)}>Reinicia orden</button>
+        <div className="d-flex justify-content-center mb-3 ">
+          <div className="">
+          <button className="button-sort" onClick={()=>sortAlpha(presupuestosList)}>Ordena alfabeticamente</button>
+          <button className="button-sort ms-3 me-3" onClick={()=>sortByDate(presupuestosList)}>Ordena por fecha </button>
+          <button className="button-sort" onClick={()=>initial(presupuestosList)}>Reinicia orden</button>
+          </div >
         </div>
-        <Budget  presupuestos={presupuestos} />
+        <div className="row g-3 d-flex justify-content-center mb-5 align-items-center">
+          <div className="filtro col-auto  ">
+            <label htmlFor="budgetName" className="filtro-presupuestos">BUSCAR PRESUPUESTOS:</label>
+          </div>
+          <div className="col-auto">
+            <input 
+              type="text" 
+              placeholder="Indica un nombre " 
+              className="form-control"
+              
+              ></input>
+          </div>
+        </div>
+        <Budget  presupuestosList={presupuestosList} 
+                  />
       </div>
     </div>
    </div>

@@ -1,10 +1,10 @@
 import React from "react";
 import "../App.css";
 
-function Budget({presupuestos}){
+function Budget({presupuestosList}){
   
   return(
-   <div className="col-12">
+    <div className="col-12">
     <table className="table table-responsive table-hover">
       <thead className=" text-center">
         <tr>
@@ -22,7 +22,7 @@ function Budget({presupuestos}){
       </thead>
       <tbody className="text-center align-baseline">
         {
-          presupuestos.map((newBudget, index)=>(
+          presupuestosList.map((newBudget, index)=>(
             <tr>
               <td>{index + 1}</td>
               <td>{newBudget.presupuesto}</td>
@@ -40,8 +40,10 @@ function Budget({presupuestos}){
         }
       </tbody>
     </table> 
-   </div> 
-    
+   </div>
   )
 }
+  
+  
+
 export default Budget;
