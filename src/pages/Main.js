@@ -78,12 +78,12 @@ const limpiarForm = () => {
     // eslint-disable-next-line
   },[web, seo, google, pages, languages])
 
-  //Funciones para los botones ORDENAR BUDGETS. Antes de nada, necesitamos guradar el estado inicial de presupuestos de algun manera, de lo contrario, el localStorage tambien se modificará al ordenarlos y no podremos hacer un reset al estado inicial.
+  //Funciones para los botones ORDENAR BUDGETS y BUSCADOR. Antes de nada, necesitamos guradar el estado inicial de presupuestos de algun manera, de lo contrario, el localStorage tambien se modificará al ordenarlos y no podremos hacer un reset al estado inicial.
   //creamos variable para guardar defaultpresupuestos(que será una copia del original)
   //estado para presupuestosList, que al cambiar presupuestos con un useEffect se inicializará en la lista de presupuestos. Asi podemos trabajar con ella sin que localStorage se modifique y conservando el valor default para hacer el reset
   const initialPresupuestos =[...presupuestos]
   const [presupuestosList, setPresupuestosList]= useState([])
-
+  const [search, setSearch] = useState("")
   useEffect(()=>{
     setPresupuestosList([...presupuestos]);
   }, [presupuestos])
@@ -104,6 +104,13 @@ const limpiarForm = () => {
   function initial(){
       setPresupuestosList([...initialPresupuestos])
     }
+  const buscador =(event)=>{
+    setSearch(event.target.value);
+    const buscadorResults = presupuestosList.filter(
+      item => item.presupuesto.toLowerCase() === event.target.value.toLowerCase());
+      buscadorResults.length > 0 ? setPresupuestosList(buscadorResults)
+                                : setPresupuestosList(presupuestos);
+  }
   
   return(
    <div className="container-fluid  mt-3 ">
@@ -214,9 +221,10 @@ const limpiarForm = () => {
           <div className="col-auto">
             <input 
               type="text" 
-              placeholder="Indica un nombre " 
+              placeholder="nombre del presupuesto " 
               className="form-control"
-              
+              value={search}
+              onChange={buscador}
               ></input>
           </div>
         </div>
