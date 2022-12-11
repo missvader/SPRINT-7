@@ -25,7 +25,6 @@ const getPresupuestos = () =>{
   const [totalPrice, setTotalPrice] = useState(0);
   const [budgetName, setBudgetName] = useState("");
   const [clientName, setClientName] = useState("");
-  
 
  /*esta es la función que servirá para guardar el presupuesto en localStorage al hacer submit en el boton guardar */
 
@@ -57,7 +56,7 @@ const limpiarForm = () => {
   setBudgetName("");
   setClientName("");
 }
-  
+
   //LOCAL STORAGE GUARDAR DATOS
   /*guardamos la data dentro del localStorage, lo ponemos dentro de useEffect pq se ejecutara autamicamente cuando detecte cambios en data. Importante, ponemos data como dependencia para que solo se ejecute una vez */
   useEffect(()=>{
@@ -96,7 +95,7 @@ const limpiarForm = () => {
 
   function sortByDate(){
     const byDate = presupuestosList.sort((a,b)=>{
-      return a.fecha.toLowerCase() > b.fecha.toLowerCase() ? 1 : -1;
+      return a.fecha.toLowerCase() < b.fecha.toLowerCase() ? 1 : -1;
     })
     setPresupuestosList([...byDate])
   }
